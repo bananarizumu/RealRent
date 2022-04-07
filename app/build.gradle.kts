@@ -1,5 +1,4 @@
-val kotlin_version: String by project
-val compose_version: String by project
+import buildsrc.Depends
 
 plugins {
     id ("com.android.application")
@@ -7,15 +6,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdkVersion(Depends.Versions.androidCompileSdkVersion)
     defaultConfig {
-        applicationId = "com.banana.realrent"
-        minSdkVersion(24)
-        targetSdkVersion(31)
-        versionCode = 1
-        versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+        applicationId = Depends.Versions.applicationId
+        minSdkVersion(Depends.Versions.minSdkVersion)
+        targetSdkVersion(Depends.Versions.targetSdkVersion)
+        versionCode = Depends.Versions.appVersionCode
+        versionName = Depends.generateVersionName()
+        testInstrumentationRunner = Depends.Versions.testInstrumentationRunner
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -38,7 +36,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = compose_version
+        kotlinCompilerExtensionVersion = Depends.Versions.composeVersion
     }
     packagingOptions {
         resources {
@@ -48,20 +46,25 @@ android {
 }
 
 dependencies {
+    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
+    implementation(Depends.Libraries.kotlin)
+    implementation(buildsrc.Depends.Libraries.appcompat)
+    implementation(buildsrc.Depends.Libraries.android_core_ktx)
+    implementation(buildsrc.Depends.Libraries.constraintlayout)
+    implementation(Depends.Libraries.material)
 
-    implementation ("androidx.core:core-ktx:1.7.0")
-    implementation ("androidx.compose.ui:ui:$compose_version")
-    implementation ("androidx.compose.material:material:$compose_version")
-    implementation ("androidx.compose.ui:ui-tooling-preview:$compose_version")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation ("androidx.activity:activity-compose:1.3.1")
-    testImplementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$compose_version")
-    debugImplementation ("androidx.compose.ui:ui-tooling:$compose_version")
+    testImplementation(buildsrc.Depends.Libraries.junit)
+    androidTestImplementation(buildsrc.Depends.Libraries.test_runner)
+    androidTestImplementation(buildsrc.Depends.Libraries.espresso_core)
+
+    // compose
+    implementation (Depends.Libraries.compose_ui)
+    implementation (Depends.Libraries.compose_material)
+    implementation (Depends.Libraries.compose_material)
+    implementation(Depends.Libraries.activity_compose)
+    androidTestImplementation (Depends.Libraries.compose_junit)
+    debugImplementation (Depends.Libraries.compose_ui_tool)
 }
-
 
 
 
