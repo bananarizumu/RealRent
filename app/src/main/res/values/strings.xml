@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">RealRent</string>
+
+    <string name="unit_yen">円</string>
+    <string name="unit_month">ヶ月</string>
+    <string name="unit_year">年</string>
+
+    <string name="monthly_rent">賃料</string>
+    <string name="security_deposit">敷金</string>
+    <string name="key_money">礼金</string>
+    <string name="brokerage_fee">仲介手数料</string>
+    <string name="regidence_period">想定居住期間</string>
+    <string name="contract_period">契約期間</string>
+    <string name="renewal_fee">更新料</string>
+
+    <string name="must_label">必須</string>
+
 </resources>
