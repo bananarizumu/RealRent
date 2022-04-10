@@ -52,6 +52,7 @@ dependencies {
     implementation(buildsrc.Depends.Libraries.android_core_ktx)
     implementation(buildsrc.Depends.Libraries.constraintlayout)
     implementation(Depends.Libraries.material)
+    implementation(Depends.Libraries.fragment_ktx)
 
     testImplementation(buildsrc.Depends.Libraries.junit)
     androidTestImplementation(buildsrc.Depends.Libraries.test_runner)

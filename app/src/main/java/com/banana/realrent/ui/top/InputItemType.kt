@@ -3,7 +3,7 @@ package com.banana.realrent.ui.top
 import androidx.annotation.StringRes
 import com.banana.realrent.R
 
-enum class InputItem(@StringRes val title: Int, val isMust: Boolean, @StringRes val unit: Int) {
+enum class InputItemType(@StringRes val title: Int, val isMust: Boolean, @StringRes val unit: Int) {
     MONTHLY_RENT(R.string.monthly_rent, true, R.string.unit_yen),
     SECURITY_DEPOSIT(R.string.security_deposit, true, R.string.unit_yen),
     KEY_MONEY(R.string.key_money, false, R.string.unit_yen),

@@ -11,6 +11,7 @@ object Depends {
         const val targetSdkVersion = 31
         const val minSdkVersion = 21
         const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        const val fragmentKtxVersion = "1.4.1"
 
         const val composeVersion = "1.1.1"
         const val activityComposeVersion = "1.4.0"
@@ -41,6 +42,7 @@ object Depends {
         const val test_runner = "androidx.test:runner:${Versions.supportTestVersion}"
         const val espresso_core = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
         const val material = "com.google.android.material:material:${Versions.materialVersion}"
+        const val fragment_ktx = "androidx.fragment:fragment-ktx:${Versions.fragmentKtxVersion}"
 
         // compose
         const val compose_ui = "androidx.compose.ui:ui:${Versions.composeVersion}"
@@ -49,7 +51,6 @@ object Depends {
         const val compose_junit = "androidx.compose.ui:ui-test-junit4:${Versions.composeVersion}"
         const val compose_ui_tool = "androidx.compose.ui:ui-tooling:${Versions.composeVersion}"
         const val activity_compose = "androidx.activity:activity-compose:${Versions.activityComposeVersion}"
-
     }
 
     fun generateVersionName(): String {
