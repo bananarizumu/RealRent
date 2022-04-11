@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -32,11 +33,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
+                    setupNavigation(navController)
                     NavHost(navController = navController, startDestination = Screen.TOP.route) {
                         composable(route = Screen.TOP.route) {
-                            TopScreen(topViewModel,
-                                onClickButton = { navController.navigate(Screen.RESULT.route) }
-                            )
+                            TopScreen(topViewModel)
                         }
                         composable(route = Screen.RESULT.route) {
                             ResultScreen()
@@ -44,6 +44,12 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setupNavigation(navController: NavController) {
+        topViewModel.navigateTo.observe(this) {
+            navController.navigate(it.route)
         }
     }
 }

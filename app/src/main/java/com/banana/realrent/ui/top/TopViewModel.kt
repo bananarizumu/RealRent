@@ -3,13 +3,17 @@ package com.banana.realrent.ui.top
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.banana.realrent.Screen
 import com.banana.realrent.ui.TextFieldState
 
 class TopViewModel(): ViewModel() {
 
-    var topPageState = TopPageState()
+    val navigateTo = MutableLiveData<Screen>()
 
+    var topPageState = TopPageState()
     val inputItems: List<TextFieldState>
     get() {
         return listOf(
@@ -22,4 +26,5 @@ class TopViewModel(): ViewModel() {
             topPageState.brokerageFee
         )
     }
+
 }

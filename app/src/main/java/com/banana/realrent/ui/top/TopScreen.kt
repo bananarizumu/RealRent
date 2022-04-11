@@ -16,10 +16,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.banana.realrent.R
+import com.banana.realrent.Screen
 import com.banana.realrent.ui.TextFieldState
 
 @Composable
-fun TopScreen(viewModel: TopViewModel, onClickButton: ()->Unit = {}) {
+fun TopScreen(viewModel: TopViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -40,7 +41,7 @@ fun TopScreen(viewModel: TopViewModel, onClickButton: ()->Unit = {}) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Button(
                         onClick = {
-                            onClickButton()
+                            viewModel.navigateTo.value = Screen.RESULT
                         },
                         modifier = Modifier
                             .align(Alignment.Center)
