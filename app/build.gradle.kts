@@ -36,7 +36,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = Depends.Versions.composeVersion
+        kotlinCompilerExtensionVersion = Depends.Compose.composeVersion
     }
     packagingOptions {
         resources {
@@ -59,12 +59,18 @@ dependencies {
     androidTestImplementation(buildsrc.Depends.Libraries.espresso_core)
 
     // compose
-    implementation (Depends.Libraries.compose_ui)
-    implementation (Depends.Libraries.compose_material)
-    implementation (Depends.Libraries.compose_material)
-    implementation(Depends.Libraries.activity_compose)
-    androidTestImplementation (Depends.Libraries.compose_junit)
-    debugImplementation (Depends.Libraries.compose_ui_tool)
+    implementation (Depends.Compose.compose_ui)
+    implementation (Depends.Compose.compose_material)
+    implementation (Depends.Compose.compose_material)
+    implementation(Depends.Compose.activity_compose)
+    androidTestImplementation (Depends.Compose.compose_junit)
+    debugImplementation (Depends.Compose.compose_ui_tool)
+
+    //Navigation
+    implementation(Depends.Navigation.fragment)
+    implementation(Depends.Navigation.uiKtx)
+    implementation(Depends.Navigation.navigationCompose)
+
 }
 
 

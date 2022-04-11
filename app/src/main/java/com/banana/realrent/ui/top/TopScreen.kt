@@ -19,7 +19,7 @@ import com.banana.realrent.R
 import com.banana.realrent.ui.TextFieldState
 
 @Composable
-fun TopScreen(viewModel: TopViewModel) {
+fun TopScreen(viewModel: TopViewModel, onClickButton: ()->Unit = {}) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -39,7 +39,9 @@ fun TopScreen(viewModel: TopViewModel) {
             item {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Button(
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            onClickButton()
+                        },
                         modifier = Modifier
                             .align(Alignment.Center)
                             .padding(top = 8.dp)

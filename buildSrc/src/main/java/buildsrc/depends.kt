@@ -12,9 +12,6 @@ object Depends {
         const val minSdkVersion = 21
         const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         const val fragmentKtxVersion = "1.4.1"
-
-        const val composeVersion = "1.1.1"
-        const val activityComposeVersion = "1.4.0"
         const val supportVersion = "1.4.1"
         const val coreKtxVersion = "1.7.0"
         const val constraintLayoutVersion = "2.1.3"
@@ -44,16 +41,29 @@ object Depends {
         const val material = "com.google.android.material:material:${Versions.materialVersion}"
         const val fragment_ktx = "androidx.fragment:fragment-ktx:${Versions.fragmentKtxVersion}"
 
-        // compose
-        const val compose_ui = "androidx.compose.ui:ui:${Versions.composeVersion}"
-        const val compose_material = "androidx.compose.material:material:${Versions.composeVersion}"
-        const val compose_preview = "androidx.compose.ui:ui-tooling-preview:${Versions.composeVersion}"
-        const val compose_junit = "androidx.compose.ui:ui-test-junit4:${Versions.composeVersion}"
-        const val compose_ui_tool = "androidx.compose.ui:ui-tooling:${Versions.composeVersion}"
-        const val activity_compose = "androidx.activity:activity-compose:${Versions.activityComposeVersion}"
+
     }
 
-    fun generateVersionName(): String {
+    object Navigation {
+        private const val version = "2.4.1"
+        const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
+        const val uiKtx = "androidx.navigation:navigation-ui-ktx:$version"
+        const val navigationCompose = "androidx.navigation:navigation-compose:$version"
+    }
+
+    object Compose {
+        const val composeVersion = "1.1.1"
+        const val activityComposeVersion = "1.4.0"
+
+        const val compose_ui = "androidx.compose.ui:ui:${composeVersion}"
+        const val compose_material = "androidx.compose.material:material:${composeVersion}"
+        const val compose_preview = "androidx.compose.ui:ui-tooling-preview:${composeVersion}"
+        const val compose_junit = "androidx.compose.ui:ui-test-junit4:${composeVersion}"
+        const val compose_ui_tool = "androidx.compose.ui:ui-tooling:${composeVersion}"
+        const val activity_compose = "androidx.activity:activity-compose:${activityComposeVersion}"
+    }
+
+        fun generateVersionName(): String {
         val patch: Int = Versions.appVersionCode.rem(1000)
         val minor: Int = (Versions.appVersionCode / 1000).rem(1000)
         val major: Int = (Versions.appVersionCode / 1000000).rem(1000)

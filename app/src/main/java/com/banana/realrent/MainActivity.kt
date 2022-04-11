@@ -11,24 +11,37 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.banana.realrent.ui.result.ResultScreen
 import com.banana.realrent.ui.theme.RealRentTheme
 import com.banana.realrent.ui.top.TopScreen
 import com.banana.realrent.ui.top.TopViewModel
 
 class MainActivity : ComponentActivity() {
 
-    val topViewModel by viewModels<TopViewModel>()
+    private val topViewModel by viewModels<TopViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             RealRentTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    TopScreen(viewModel = topViewModel)
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = Screen.TOP.route) {
+                        composable(route = Screen.TOP.route) {
+                            TopScreen(topViewModel,
+                                onClickButton = { navController.navigate(Screen.RESULT.route) }
+                            )
+                        }
+                        composable(route = Screen.RESULT.route) {
+                            ResultScreen()
+                        }
+                    }
                 }
             }
         }
