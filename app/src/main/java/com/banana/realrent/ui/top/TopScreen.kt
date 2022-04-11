@@ -16,11 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.banana.realrent.R
-import com.banana.realrent.Screen
 import com.banana.realrent.ui.TextFieldState
 
 @Composable
-fun TopScreen(viewModel: TopViewModel) {
+fun TopScreen(viewModel: TopViewModel, onClickButton: (Int)->Unit = {}) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -41,11 +40,13 @@ fun TopScreen(viewModel: TopViewModel) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Button(
                         onClick = {
-                            viewModel.navigateTo.value = Screen.RESULT
+//                            viewModel.navigateTo.value = Screen.RESULT
+                            onClickButton(viewModel.calculatRealRent())
                         },
                         modifier = Modifier
                             .align(Alignment.Center)
-                            .padding(top = 8.dp)
+                            .padding(top = 8.dp),
+                        enabled = viewModel.inputItems.all { it.isValid }
                     ) {
                         Text(
                             "真実の家賃を計算する",
@@ -95,10 +96,10 @@ fun InputField(textFieldState: TextFieldState) {
                 },
                 label = { Text("Label", fontSize = 14.sp) },
                 modifier = Modifier.fillMaxWidth(),
-                isError = textFieldState.isError,
+                isError = textFieldState.isValid,
                 textStyle = TextStyle(fontSize = 8.sp, textAlign = TextAlign.End)
             )
-            if (textFieldState.isError) {
+            if (!textFieldState.isValid) {
                 Text(
                     text = "Error message",
                     color = MaterialTheme.colors.error,

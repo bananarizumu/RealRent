@@ -1,24 +1,16 @@
 package com.banana.realrent.ui.top
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.banana.realrent.Screen
 import com.banana.realrent.ui.TextFieldState
 
 class TopViewModel(): ViewModel() {
-
-    val navigateTo = MutableLiveData<Screen>()
 
     var topPageState = TopPageState()
     val inputItems: List<TextFieldState>
     get() {
         return listOf(
             topPageState.monthlyRent,
-            topPageState.SECURITY_DEPOSIT,
+            topPageState.securityDeposit,
             topPageState.keyMoney,
             topPageState.residencePeriod,
             topPageState.contractPeriod,
@@ -27,4 +19,10 @@ class TopViewModel(): ViewModel() {
         )
     }
 
+    fun calculatRealRent(): Int {
+        val initialCost = inputItems.filter { it.inputItemType.costType == CostType.INITIAL_COST }.sumOf { it.text.toInt() }
+        val totalMonthlyFee = topPageState.monthlyRent.text.toInt() * topPageState.residencePeriod.text.toInt()
+        val totalRenewalFee = (topPageState.residencePeriod.text.toInt() / 12 / topPageState.contractPeriod.text.toInt()) * topPageState.renewalFee.text.toInt()
+        return initialCost + totalMonthlyFee + totalRenewalFee
+    }
 }

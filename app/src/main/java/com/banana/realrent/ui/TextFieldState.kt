@@ -6,7 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.banana.realrent.ui.top.InputItemType
 
-class TextFieldState(val inputItemType: InputItemType) {
+class TextFieldState(
+    val inputItemType: InputItemType,
+    private val validator: (String) -> Boolean = { true },
+    ) {
     var text: String by mutableStateOf("")
-    var isError: Boolean by mutableStateOf(false)
+
+    val isValid: Boolean
+        get() = !(inputItemType.isMust && text.isEmpty())
 }
+

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ResultScreen() {
+fun ResultScreen(realRentValue: Int) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -47,7 +47,7 @@ fun ResultScreen() {
             Text(
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                 textAlign = TextAlign.Center,
-                text = "800万円",
+                text = "${realRentValue}万円",
                 style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.Red
@@ -67,5 +67,5 @@ fun ResultScreen() {
 @Preview
 @Composable
 fun PreviewResultScreen() {
-    ResultScreen()
+    ResultScreen(300)
 }

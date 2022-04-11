@@ -11,10 +11,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.banana.realrent.ui.result.ResultScreen
 import com.banana.realrent.ui.theme.RealRentTheme
 import com.banana.realrent.ui.top.TopScreen
@@ -33,13 +34,22 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
-                    setupNavigation(navController)
                     NavHost(navController = navController, startDestination = Screen.TOP.route) {
                         composable(route = Screen.TOP.route) {
-                            TopScreen(topViewModel)
+                            TopScreen(topViewModel) {
+                                navController.navigate("${Screen.RESULT.route}/$it")
+
+                            }
+
                         }
-                        composable(route = Screen.RESULT.route) {
-                            ResultScreen()
+                        composable(
+                            route = "${Screen.RESULT.route}/{$KEY_REAL_RENT}",
+                            arguments = listOf(
+                                navArgument(KEY_REAL_RENT) { type = NavType.IntType },
+                            )
+                        ) { backStackEntry ->
+                            val id = backStackEntry.arguments?.getInt(KEY_REAL_RENT) ?: 0
+                            ResultScreen(id)
                         }
                     }
                 }
@@ -47,10 +57,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun setupNavigation(navController: NavController) {
-        topViewModel.navigateTo.observe(this) {
-            navController.navigate(it.route)
-        }
+    companion object {
+        const val KEY_REAL_RENT = "key_real_rent"
     }
 }
 
