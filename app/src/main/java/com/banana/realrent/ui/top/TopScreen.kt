@@ -19,14 +19,14 @@ import com.banana.realrent.R
 import com.banana.realrent.ui.TextFieldState
 
 @Composable
-fun TopScreen(viewModel: TopViewModel, onClickButton: (Int)->Unit = {}) {
+fun TopScreen(viewModel: TopViewModel, toResultScreen: (Int)->Unit = {}) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         textAlign = TextAlign.Center,
-                        text = "Real Rent",
+                        text = stringResource(id = R.string.app_name),
                     )
                 },
             )
@@ -41,7 +41,7 @@ fun TopScreen(viewModel: TopViewModel, onClickButton: (Int)->Unit = {}) {
                     Button(
                         onClick = {
 //                            viewModel.navigateTo.value = Screen.RESULT
-                            onClickButton(viewModel.calculatRealRent())
+                            toResultScreen(viewModel.calculatRealRent())
                         },
                         modifier = Modifier
                             .align(Alignment.Center)
@@ -49,7 +49,7 @@ fun TopScreen(viewModel: TopViewModel, onClickButton: (Int)->Unit = {}) {
                         enabled = viewModel.inputItems.all { it.isValid }
                     ) {
                         Text(
-                            "真実の家賃を計算する",
+                            stringResource(id = R.string.caluclate_real_rent),
                             modifier = Modifier.padding(start = 8.dp, end = 8.dp)
                         )
                     }
@@ -94,14 +94,14 @@ fun InputField(textFieldState: TextFieldState) {
                 onValueChange = {
                     textFieldState.text = it
                 },
-                label = { Text("Label", fontSize = 14.sp) },
+                label = { Text(stringResource(id = R.string.input_label), fontSize = 10.sp) },
                 modifier = Modifier.fillMaxWidth(),
                 isError = textFieldState.isValid,
                 textStyle = TextStyle(fontSize = 8.sp, textAlign = TextAlign.End)
             )
             if (!textFieldState.isValid) {
                 Text(
-                    text = "Error message",
+                    text = stringResource(id = R.string.input_error_message),
                     color = MaterialTheme.colors.error,
                     style = MaterialTheme.typography.caption,
                     modifier = Modifier.padding(start = 16.dp)

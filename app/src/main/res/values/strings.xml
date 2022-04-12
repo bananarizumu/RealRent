@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">RealRent</string>
+    <string name="app_name">真実の家賃</string>
 
+    <!-- top screen   -->
     <string name="unit_yen">円</string>
     <string name="unit_month">ヶ月</string>
     <string name="unit_year">年</string>
@@ -14,5 +15,14 @@
     <string name="renewal_fee">更新料</string>
 
     <string name="must_label">必須</string>
+    <string name="input_label">入力してください</string>
+    <string name="input_error_message">入力値が不正です</string>
+
+    <string name="caluclate_real_rent">真実の家賃を計算する</string>
+
+    <!-- result screen   -->
+    <string name="real_rent_prefix">真実の家賃は…</string>
+    <string name="real_rent_value">%d 万円</string>
+    <string name="real_rent_sufix">です</string>
 
 </resources>

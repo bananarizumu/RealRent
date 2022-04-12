@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.TOP.route) {
                             TopScreen(topViewModel) {
                                 navController.navigate("${Screen.RESULT.route}/$it")
-
                             }
 
                         }
@@ -49,7 +48,9 @@ class MainActivity : ComponentActivity() {
                             )
                         ) { backStackEntry ->
                             val id = backStackEntry.arguments?.getInt(KEY_REAL_RENT) ?: 0
-                            ResultScreen(id)
+                            ResultScreen(id) {
+                                navController.navigateUp()
+                            }
                         }
                     }
                 }

@@ -23,6 +23,6 @@ class TopViewModel(): ViewModel() {
         val initialCost = inputItems.filter { it.inputItemType.costType == CostType.INITIAL_COST }.sumOf { it.text.toInt() }
         val totalMonthlyFee = topPageState.monthlyRent.text.toInt() * topPageState.residencePeriod.text.toInt()
         val totalRenewalFee = (topPageState.residencePeriod.text.toInt() / 12 / topPageState.contractPeriod.text.toInt()) * topPageState.renewalFee.text.toInt()
-        return initialCost + totalMonthlyFee + totalRenewalFee
+        return (initialCost + totalMonthlyFee + totalRenewalFee) / 10000
     }
 }

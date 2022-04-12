@@ -4,29 +4,39 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.banana.realrent.R
 
 @Composable
-fun ResultScreen(realRentValue: Int) {
+fun ResultScreen(realRentValue: Int, onClickBackButton: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
                         textAlign = TextAlign.Center,
-                        text = "Real Rent",
+                        text = stringResource(id = R.string.app_name),
                     )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { onClickBackButton() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
                 },
             )
         },
@@ -39,7 +49,7 @@ fun ResultScreen(realRentValue: Int) {
         ) {
             Text(
                 textAlign = TextAlign.Center,
-                text = "真実の家賃は",
+                text = stringResource(id = R.string.real_rent_prefix),
                 style = TextStyle(
                     fontSize = 12.sp
                 )
@@ -47,7 +57,7 @@ fun ResultScreen(realRentValue: Int) {
             Text(
                 modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                 textAlign = TextAlign.Center,
-                text = "${realRentValue}万円",
+                text = stringResource(id = R.string.real_rent_value, realRentValue),
                 style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.Red
@@ -55,7 +65,7 @@ fun ResultScreen(realRentValue: Int) {
             )
             Text(
                 textAlign = TextAlign.Center,
-                text = "です",
+                text = stringResource(id = R.string.real_rent_sufix),
                 style = TextStyle(
                     fontSize = 12.sp
                 )
@@ -67,5 +77,5 @@ fun ResultScreen(realRentValue: Int) {
 @Preview
 @Composable
 fun PreviewResultScreen() {
-    ResultScreen(300)
+    ResultScreen(300) {}
 }
