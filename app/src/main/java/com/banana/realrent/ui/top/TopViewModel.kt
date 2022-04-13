@@ -5,8 +5,8 @@ import com.banana.realrent.ui.TextFieldState
 
 class TopViewModel(): ViewModel() {
 
-    var topPageState = TopPageState()
-    val inputItems: List<TextFieldState>
+    var topPageState = TopPageState(CostType.OTHERS.pageIndex)
+    private val allItems: List<TextFieldState>
     get() {
         return listOf(
             topPageState.monthlyRent,
@@ -19,8 +19,24 @@ class TopViewModel(): ViewModel() {
         )
     }
 
-    fun calculatRealRent(): Int {
-        val initialCost = inputItems.filter { it.inputItemType.costType == CostType.INITIAL_COST }.sumOf { it.text.toInt() }
+    fun incrementPage() {
+        topPageState.currentQuestionIndex += 1
+        topPageState.showDone = topPageState.currentQuestionIndex == topPageState.lastIndex
+        topPageState.showPrevious = topPageState.currentQuestionIndex != 0
+    }
+
+    fun decrementPage() {
+        topPageState.currentQuestionIndex -= 1
+        topPageState.showDone = topPageState.currentQuestionIndex == topPageState.lastIndex
+        topPageState.showPrevious = topPageState.currentQuestionIndex != 0
+    }
+
+    fun getInputItemsByPageIndex(pageIndex: Int): List<TextFieldState> {
+       return allItems.filter { it.inputItemType.costType.pageIndex == pageIndex }
+    }
+
+    fun calculateRealRent(): Int {
+        val initialCost = getInputItemsByPageIndex(CostType.INITIAL_COST.pageIndex).sumOf { it.text.toInt() }
         val totalMonthlyFee = topPageState.monthlyRent.text.toInt() * topPageState.residencePeriod.text.toInt()
         val totalRenewalFee = (topPageState.residencePeriod.text.toInt() / 12 / topPageState.contractPeriod.text.toInt()) * topPageState.renewalFee.text.toInt()
         return (initialCost + totalMonthlyFee + totalRenewalFee) / 10000

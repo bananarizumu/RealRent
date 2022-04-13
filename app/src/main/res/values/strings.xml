@@ -19,6 +19,9 @@
     <string name="input_error_message">入力値が不正です</string>
 
     <string name="caluclate_real_rent">真実の家賃を計算する</string>
+    <string name="back_button">戻る</string>
+    <string name="next_button">次へ</string>
+
 
     <!-- result screen   -->
     <string name="real_rent_prefix">真実の家賃は…</string>

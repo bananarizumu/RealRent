@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +21,10 @@ import com.banana.realrent.ui.TextFieldState
 
 @Composable
 fun TopScreen(viewModel: TopViewModel, toResultScreen: (Int)->Unit = {}) {
+    val state = remember {
+        viewModel.topPageState
+    }
+    val items = viewModel.getInputItemsByPageIndex(state.currentQuestionIndex)
     Scaffold(
         topBar = {
             TopAppBar(
@@ -31,29 +36,20 @@ fun TopScreen(viewModel: TopViewModel, toResultScreen: (Int)->Unit = {}) {
                 },
             )
         },
+        bottomBar =  {
+            BottomBar(
+                topPageState = viewModel.topPageState,
+                enableNext = true,
+                onClickNext = { viewModel.incrementPage() },
+                onClickBack = { viewModel.decrementPage() },
+                onClickDone = { toResultScreen(viewModel.calculateRealRent()) }
+            )
+        }
     ) {
-        LazyColumn() {
-            items(viewModel.inputItems) { item ->
+        LazyColumn(modifier = Modifier
+            .fillMaxSize()) {
+            items(items) { item ->
                 InputField(textFieldState = item)
-            }
-            item {
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    Button(
-                        onClick = {
-//                            viewModel.navigateTo.value = Screen.RESULT
-                            toResultScreen(viewModel.calculatRealRent())
-                        },
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(top = 8.dp),
-                        enabled = viewModel.inputItems.all { it.isValid }
-                    ) {
-                        Text(
-                            stringResource(id = R.string.caluclate_real_rent),
-                            modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-                        )
-                    }
-                }
             }
         }
     }
@@ -111,7 +107,6 @@ fun InputField(textFieldState: TextFieldState) {
         Text(
             text = stringResource(id = textFieldState.inputItemType.unit),
             Modifier
-//                .weight(1f, fill = false)
                 .width(48.dp)
                 .align(Alignment.CenterVertically)
                 .padding(end = 16.dp),
@@ -119,6 +114,70 @@ fun InputField(textFieldState: TextFieldState) {
             fontSize = 14.sp,
         )
     }
+}
+
+@Composable
+fun BottomBar(
+    topPageState: TopPageState,
+    enableNext: Boolean,
+    onClickNext: () -> Unit,
+    onClickBack: () -> Unit,
+    onClickDone: ()-> Unit
+) {
+    Surface(
+        elevation = 7.dp,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 20.dp)
+        ) {
+            if(topPageState.showPrevious) {
+                Button(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(48.dp),
+                    onClick = onClickBack,
+                ) {
+                    Text(text = stringResource(id = R.string.back_button))
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+            }
+            Button(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(48.dp),
+                onClick =
+                {
+                    if(topPageState.showDone) {
+                        onClickDone()
+                    } else {
+                        onClickNext()
+                    }
+                },
+                enabled = enableNext
+            ) {
+                Text(
+                    stringResource(id = if(topPageState.showDone) R.string.caluclate_real_rent else R.string.next_button),
+                )
+            }
+
+
+
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewBottomBar() {
+    BottomBar(topPageState = TopPageState(0),
+        enableNext = true,
+        onClickNext = {},
+        onClickDone = {},
+        onClickBack = {}
+    )
 }
 
 @Preview

@@ -17,8 +17,8 @@ enum class InputItemType(@StringRes val title: Int,
     RENEWAL_FEE(R.string.renewal_fee, true, R.string.unit_yen, CostType.OTHERS),
 }
 
-enum class CostType() {
-    INITIAL_COST,
-    MONTHLY_COST,
-    OTHERS
+enum class CostType(val pageIndex: Int) {
+    MONTHLY_COST(0),
+    INITIAL_COST(1),
+    OTHERS(2)
 }
