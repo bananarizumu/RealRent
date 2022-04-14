@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.banana.realrent.ui.TextFieldState
+import com.banana.realrent.util.isValidNumber
 
 data class TopPageState(
     val lastIndex: Int,

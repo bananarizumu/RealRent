@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -20,7 +21,7 @@ import com.banana.realrent.R
 import com.banana.realrent.ui.TextFieldState
 
 @Composable
-fun TopScreen(viewModel: TopViewModel, toResultScreen: (Int)->Unit = {}) {
+fun TopScreen(viewModel: TopViewModel, toResultScreen: (Int) -> Unit = {}) {
     val state = remember {
         viewModel.topPageState
     }
@@ -36,18 +37,20 @@ fun TopScreen(viewModel: TopViewModel, toResultScreen: (Int)->Unit = {}) {
                 },
             )
         },
-        bottomBar =  {
+        bottomBar = {
             BottomBar(
                 topPageState = viewModel.topPageState,
-                enableNext = true,
+                enableNext = items.all { it.isValid },
                 onClickNext = { viewModel.incrementPage() },
                 onClickBack = { viewModel.decrementPage() },
                 onClickDone = { toResultScreen(viewModel.calculateRealRent()) }
             )
         }
     ) {
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
             items(items) { item ->
                 InputField(textFieldState = item)
             }
@@ -91,11 +94,15 @@ fun InputField(textFieldState: TextFieldState) {
                     textFieldState.text = it
                 },
                 label = { Text(stringResource(id = R.string.input_label), fontSize = 10.sp) },
-                modifier = Modifier.fillMaxWidth(),
-                isError = textFieldState.isValid,
-                textStyle = TextStyle(fontSize = 8.sp, textAlign = TextAlign.End)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .onFocusChanged {
+                        if (it.isFocused) textFieldState.hasAlreadyFocused = true
+                    },
+                isError = textFieldState.shouldDisplayError,
+                textStyle = TextStyle(fontSize = 8.sp, textAlign = TextAlign.End),
             )
-            if (!textFieldState.isValid) {
+            if (textFieldState.shouldDisplayError) {
                 Text(
                     text = stringResource(id = R.string.input_error_message),
                     color = MaterialTheme.colors.error,
@@ -122,7 +129,7 @@ fun BottomBar(
     enableNext: Boolean,
     onClickNext: () -> Unit,
     onClickBack: () -> Unit,
-    onClickDone: ()-> Unit
+    onClickDone: () -> Unit
 ) {
     Surface(
         elevation = 7.dp,
@@ -133,7 +140,7 @@ fun BottomBar(
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 20.dp)
         ) {
-            if(topPageState.showPrevious) {
+            if (topPageState.showPrevious) {
                 Button(
                     modifier = Modifier
                         .weight(1f)
@@ -150,7 +157,7 @@ fun BottomBar(
                     .height(48.dp),
                 onClick =
                 {
-                    if(topPageState.showDone) {
+                    if (topPageState.showDone) {
                         onClickDone()
                     } else {
                         onClickNext()
@@ -159,10 +166,9 @@ fun BottomBar(
                 enabled = enableNext
             ) {
                 Text(
-                    stringResource(id = if(topPageState.showDone) R.string.caluclate_real_rent else R.string.next_button),
+                    stringResource(id = if (topPageState.showDone) R.string.caluclate_real_rent else R.string.next_button),
                 )
             }
-
 
 
         }
