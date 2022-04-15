@@ -53,6 +53,26 @@ fun TopScreen(viewModel: TopViewModel, toResultScreen: (Int) -> Unit = {}) {
             modifier = Modifier
                 .fillMaxSize()
         ) {
+            item {
+                Box(
+                    modifier = Modifier
+                        .padding(top = 16.dp, start = 24.dp)
+                        .height(48.dp)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    val headerTitleRes = CostType.values().firstOrNull { it.pageIndex == state.currentQuestionIndex }?.titleRes ?: return@Box
+                    Text(
+                        text = stringResource(id = R.string.input_header, stringResource(id = headerTitleRes)),
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                        )
+                    )
+                }
+            }
+
             items(items) { item ->
                 InputField(textFieldState = item)
             }

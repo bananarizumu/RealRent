@@ -14,14 +14,18 @@
     <string name="contract_period">契約期間</string>
     <string name="renewal_fee">更新料</string>
 
-    <string name="must_label">必須</string>
+    <string name="must_label">[必須]</string>
     <string name="input_label">入力してください</string>
     <string name="input_error_message">入力値が不正です</string>
 
     <string name="caluclate_real_rent">真実の家賃を計算する</string>
     <string name="back_button">戻る</string>
     <string name="next_button">次へ</string>
+    <string name="input_header">%sを入力してください</string>
 
+    <string name="monthly_cost_title">毎月の賃料</string>
+    <string name="initial_cost_title">初期費用</string>
+    <string name="other_cost_title">その他</string>
 
     <!-- result screen   -->
     <string name="real_rent_prefix">真実の家賃は…</string>

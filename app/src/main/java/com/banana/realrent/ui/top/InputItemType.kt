@@ -57,8 +57,8 @@ enum class InputItemType(
     }
 }
 
-enum class CostType(val pageIndex: Int) {
-    MONTHLY_COST(0),
-    INITIAL_COST(1),
-    OTHERS(2)
+enum class CostType(val pageIndex: Int, @StringRes val titleRes: Int) {
+    MONTHLY_COST(0, R.string.monthly_cost_title),
+    INITIAL_COST(1, R.string.initial_cost_title),
+    OTHERS(2, R.string.other_cost_title)
 }
