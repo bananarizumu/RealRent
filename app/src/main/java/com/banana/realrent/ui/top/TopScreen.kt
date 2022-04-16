@@ -4,16 +4,20 @@ package com.banana.realrent.ui.top
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -80,8 +84,10 @@ fun TopScreen(viewModel: TopViewModel, toResultScreen: (Int) -> Unit = {}) {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun InputField(textFieldState: TextFieldState) {
+    val KeyboardController = LocalSoftwareKeyboardController.current
     Row(
         Modifier
             .fillMaxWidth()
@@ -122,9 +128,17 @@ fun InputField(textFieldState: TextFieldState) {
                         if (it.isFocused) textFieldState.hasAlreadyFocused = true
                     },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = textFieldState.inputItemType.keyboardAction
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = { KeyboardController?.hide()}
+                )
+                ,
                 isError = textFieldState.shouldDisplayError,
-                textStyle = TextStyle(fontSize = 8.sp, textAlign = TextAlign.End),
+                textStyle = TextStyle(fontSize = 14.sp, textAlign = TextAlign.End),
+
             )
             if (textFieldState.shouldDisplayError) {
                 Text(

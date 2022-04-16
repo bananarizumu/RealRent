@@ -36,7 +36,9 @@ class TopViewModel(): ViewModel() {
     }
 
     fun calculateRealRent(): Int {
-        val initialCost = getInputItemsByPageIndex(CostType.INITIAL_COST.pageIndex).sumOf { it.text.toInt() }
+        val initialCost = getInputItemsByPageIndex(CostType.INITIAL_COST.pageIndex).sumOf {
+            it.text.toIntOrNull() ?: 0
+        }
         val totalMonthlyFee = topPageState.monthlyRent.text.toInt() * topPageState.residencePeriod.text.toInt()
         val totalRenewalFee = (topPageState.residencePeriod.text.toInt() / 12 / topPageState.contractPeriod.text.toInt()) * topPageState.renewalFee.text.toInt()
         return (initialCost + totalMonthlyFee + totalRenewalFee) / 10000
